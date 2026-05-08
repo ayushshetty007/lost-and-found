@@ -3,14 +3,14 @@ import { motion } from 'framer-motion';
 import { Users, Code, Terminal, Cpu } from 'lucide-react';
 
 const AboutPage = () => {
-  const developers = ['Ayush', 'Tanvi', 'Aditya', 'Jiya'];
+  const developers = ['Ayush Shetty', 'Tanvi', 'Aditya', 'Jiya'];
 
   return (
     <div className="min-h-screen pt-20 flex flex-col items-center justify-center p-4">
       {/* Background elements */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyberpunk-neonBlue/10 rounded-full blur-[120px] -z-10"></div>
-      
-      <motion.div 
+
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -37,7 +37,7 @@ const AboutPage = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {developers.map((name, index) => (
-              <motion.div 
+              <motion.div
                 key={name}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
