@@ -15,32 +15,6 @@ pipeline {
             }
         }
 
-        stage('Install Backend Dependencies') {
-            steps {
-                echo 'Installing Backend Dependencies...'
-                dir('backend') {
-                    sh 'npm install'
-                }
-            }
-        }
-
-        stage('Install Frontend Dependencies') {
-            steps {
-                echo 'Installing Frontend Dependencies...'
-                dir('frontend') {
-                    sh 'npm install'
-                }
-            }
-        }
-
-        stage('Build Frontend') {
-            steps {
-                echo 'Building Frontend...'
-                dir('frontend') {
-                    sh 'npm run build'
-                }
-            }
-        }
 
         stage('Build Docker Containers') {
             steps {
