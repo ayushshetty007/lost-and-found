@@ -40,7 +40,7 @@ services:
     environment:
       # This points to localhost because the browser executes this code on the host machine,
       # and it needs to reach the backend exposed on localhost:5000.
-      - VITE_API_URL=http://13.48.58.174:5000/api
+      - VITE_API_URL=http://16.192.57.191:5000/api
     depends_on:
       - backend
     restart: always
