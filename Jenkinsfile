@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Defines the node modules path
         PATH = "${env.PATH}:/usr/local/bin"
     }
 
@@ -10,16 +9,20 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 echo 'Cloning the GitHub repository...'
-                // Assuming GitHub integration is configured. In a real scenario, use git url: '...'
                 checkout scm
             }
         }
 
+        stage('Cleanup Old Containers') {
+            steps {
+                echo 'Stopping and removing old containers to avoid conflicts...'
+                sh 'docker compose down --remove-orphans || true'
+            }
+        }
 
         stage('Build Docker Containers') {
             steps {
                 echo 'Building Docker containers using Docker Compose...'
-                // Using docker compose to build the images based on the docker-compose.yml
                 sh 'docker compose build'
             }
         }
@@ -27,7 +30,6 @@ pipeline {
         stage('Run Containers') {
             steps {
                 echo 'Starting Docker containers in detached mode...'
-                // -d runs containers in the background
                 sh 'docker compose up -d'
             }
         }
@@ -35,7 +37,6 @@ pipeline {
         stage('Verify Containers Running') {
             steps {
                 echo 'Verifying running containers...'
-                // Outputs the currently running docker containers to the Jenkins console
                 sh 'docker ps'
             }
         }
@@ -50,8 +51,6 @@ pipeline {
         }
         failure {
             echo 'Deployment failed. Please check the logs.'
-            // Optional: Automatically stop containers if the test/verify fails
-            // sh 'docker compose down'
         }
     }
 }
