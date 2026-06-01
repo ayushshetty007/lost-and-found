@@ -12,6 +12,34 @@ connectDB();
 
 const app = express();
 
+// --- Prometheus Metrics Setup ---
+const client = require('prom-client');
+const collectDefaultMetrics = client.collectDefaultMetrics;
+// Collect default Node.js metrics (CPU, memory, event loop lag, etc.)
+collectDefaultMetrics({ prefix: 'lost_and_found_' });
+
+// Custom HTTP request counter
+const httpRequestCounter = new client.Counter({
+  name: 'lost_and_found_http_requests_total',
+  help: 'Total number of HTTP requests',
+  labelNames: ['method', 'route', 'status_code'],
+});
+
+// Middleware to count all requests
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    httpRequestCounter.labels(req.method, req.path, res.statusCode).inc();
+  });
+  next();
+});
+
+// Metrics endpoint for Prometheus to scrape
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', client.register.contentType);
+  res.end(await client.register.metrics());
+});
+// --- End Prometheus Metrics Setup ---
+
 // Middleware
 app.use(cors());
 app.use(express.json());
