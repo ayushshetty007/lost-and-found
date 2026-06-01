@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Users, Code, Terminal, Cpu } from 'lucide-react';
 
 const AboutPage = () => {
-  const developers = ['Ayush Shetty', 'Tanvi', 'Aditya', 'Jiya'];
+  const developers = ['Ayush ', 'Tanvi', 'Aditya', 'Jiya'];
 
   return (
     <div className="min-h-screen pt-20 flex flex-col items-center justify-center p-4">
