@@ -19,7 +19,8 @@ const uploadToCloudinary = (buffer, mimetype) => {
       
       fs.writeFile(filePath, buffer, (err) => {
         if (err) return reject(err);
-        resolve({ secure_url: `http://localhost:5000/uploads/${fileName}` });
+        const baseUrl = process.env.BASE_URL || 'http://localhost:5000';
+        resolve({ secure_url: `${baseUrl}/uploads/${fileName}` });
       });
       return;
     }
