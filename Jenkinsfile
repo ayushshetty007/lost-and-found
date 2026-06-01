@@ -15,8 +15,12 @@ pipeline {
 
         stage('Cleanup Old Containers') {
             steps {
-                echo 'Stopping and removing old containers to avoid conflicts...'
-                sh 'docker compose down --remove-orphans || true'
+                echo 'Force removing any existing named containers to avoid conflicts...'
+                sh '''
+                    docker rm -f mongodb_container backend_container frontend_container prometheus_container grafana_container 2>/dev/null || true
+                    docker compose down --remove-orphans 2>/dev/null || true
+                    docker network rm lost-and-found_mern_network 2>/dev/null || true
+                '''
             }
         }
 
